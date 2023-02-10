@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./styles.scss";
+import Navigation from "./Component/Header/Navbar";
+import Gallery from "./Component/DummyPage/Gallery";
+import { Routes, Route } from "react-router-dom";
+import MyVisComponent from "./Component/Svg/MyVisComponent";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <div className="header">
+        <Navigation />
+      </div>
+
+      {/* <div className="height-100"> */}
+      <div className="mainbody">
+      <Routes>
+        <Route exact path="/" element={<Gallery />} />
+        <Route exact path="/svgimg" element={<MyVisComponent />} />
+        {/* <Route path="/contact" element={Contact} />
+        <Route path="/images" element={Images} /> */}
+      </Routes>
+      {/* </div> */}
+      </div>
+      <div className="footer">Footer</div>
     </div>
   );
 }
