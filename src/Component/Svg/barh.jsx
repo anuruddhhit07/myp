@@ -5,11 +5,11 @@ class BarChart extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      margin: { top: 10, right: 50, bottom: 50, left: 30 },
+      margin: { top: 40, right: 50, bottom: 50, left: 30 },
       barwidth: 50,
       bargap: 5,
       tickheight: 100,
-      yscalefactor: 4,
+      yscalefactor1: .4,
       svgwidth: 600,
       svgheight: 600,
     };
@@ -32,7 +32,12 @@ class BarChart extends Component {
 
     const xAxislength =
       autobarwidth * datalength + this.state.bargap * (datalength - 1);
-    const yAxislength = d3.max(data) * this.state.yscalefactor;
+    const yscalefactor= (height-this.state.margin.top)/d3.max(data)
+    
+    const yAxislength = d3.max(data) * yscalefactor;
+    
+    
+    
     const svg = d3
       .select(this.myRef.current)
       .append("svg")
@@ -51,9 +56,9 @@ class BarChart extends Component {
       .enter()
       .append("rect")
       .attr("x", (d, i) => i * (autobarwidth + this.state.bargap))
-      .attr("y", (d, i) => height - d * this.state.yscalefactor)
+      .attr("y", (d, i) => height - d * yscalefactor)
       .attr("width", autobarwidth)
-      .attr("height", (d, i) => d * this.state.yscalefactor)
+      .attr("height", (d, i) => d * yscalefactor)
       .attr("fill", "green");
 
     // Create the scale
@@ -71,7 +76,7 @@ class BarChart extends Component {
     var yScale = d3
       .scaleLinear()
       .domain([d3.max(data), 0])
-      .range([this.state.margin.top + this.state.margin.bottom, height]);
+      .range([height-yAxislength, height]);
 
     let yAxisGenerator = d3.axisLeft(yScale).tickSize(-xAxislength);
     svg.append("g").call(yAxisGenerator);
