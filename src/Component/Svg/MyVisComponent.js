@@ -7,7 +7,11 @@ export default function MyVisComponent() {
   return (
     <>
     <h1>I am from MyVisComponent </h1>
-    <div id='vis-container' ref={refElement} />
+    <div className= 'vis-container' ref={refElement} >
+    <svg>
+        <circle cx={50} cy={50} r={10} fill="red" />
+      </svg>
+      </div>
 
     </>
   );
