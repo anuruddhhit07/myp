@@ -13,9 +13,9 @@ class BarChart extends Component {
     }
     drawChart() {
         const data = [12, 5, 6, 6, 9, 10];
-        let bars = d3.select(this.myRef.current)
+    
 
-        const svg = d3.select(".vis-container")
+        const svg = d3.select(this.myRef.current)
                     .append("svg")
                     .attr("width", 700)
                     .attr("height", 300);
@@ -31,7 +31,7 @@ class BarChart extends Component {
             .attr("fill", "green");
     }
     render() {
-        return <div className={"vis-container"}></div>
+        return <div className={"vis-container"} ref={this.myRef}></div>
     }
 }
 export default BarChart;
