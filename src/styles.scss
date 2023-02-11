@@ -1,7 +1,7 @@
 // https://stackoverflow.com/questions/9351045/simple-div-with-header-footer-and-body
 
 .container {
-  width: 100%;
+  width: 700px;
   height: 900px;
   max-height: 900px;
   margin: 10px;
@@ -17,14 +17,14 @@
 .mainbody,
 .header,
 .footer {
-  padding: 5px;
+  padding: 15px;
 }
 .mainbody {
   margin-top: 0;
-  min-height: 650px;
-  max-height: 788px;
-  overflow: auto;
+  min-height: 600px;
+  max-height: 740px;
   background-color: #ad9494;
+  overflow-y: scroll;
 }
 .header {
   height: 80px;
@@ -38,7 +38,7 @@
   border-top-right-radius: 5px;
 }
 .footer {
-  height: 40px;
+  height: 60px;
   background-color: whiteSmoke;
   border-top: 1px solid #DDD;
   -webkit-border-bottom-left-radius: 5px;

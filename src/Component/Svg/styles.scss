@@ -20,5 +20,14 @@ h1 {
   font-size:xx-large;
 }
 .vis-container {
-  background-color:#3032b8;
+  background-color:blue;
+  position: relative; 
+ height: 60vh; 
+ padding: 0%;
+ overflow-y: scroll;
+}
+.graph-svg-component {
+    background-color: #d3db88;
+    position: absolute; 
+    margin:  10%;
 }
