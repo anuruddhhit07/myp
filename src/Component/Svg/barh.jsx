@@ -5,11 +5,15 @@ class BarChart extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      margin: { top: 0, right: 0, bottom: 0, left: 0 },
-      leftmargin:150,
-      barwidth:50,
-      bargap:25,
-      bargapy:50
+      margin: { top: 10, right: 10, bottom: 10, left: 10 },
+      leftmargin: 30,
+      barwidth: 50,
+      bargap: 5,
+      bargapy: 20,
+      tickheight: 100,
+      yscalefactor:4,
+      svgwidth:600,
+      svgheight:600
     };
     this.myRef = React.createRef();
   }
@@ -18,13 +22,19 @@ class BarChart extends Component {
     this.drawChart();
   }
   drawChart() {
-    const width = 500 - this.state.margin.left - this.state.margin.right;
-    const height = 500 - this.state.margin.top - this.state.margin.bottom;
+    const width = this.state.svgwidth - this.state.margin.left - this.state.margin.right;
+    const height = this.state.svgheight - this.state.margin.top - this.state.margin.bottom;
 
-    const data = [120, 50, 60, 70, 90, 100];
-    const datalength=data.length
-    const autobarwidth= (width-2*this.state.leftmargin-this.state.bargap*(datalength-1))/datalength
-
+    const data = [120, 50, 60, 70, 90, 100, 55, 85, 95];
+    const datalength = data.length;
+    const autobarwidth =
+      (width -
+        2 * this.state.leftmargin -
+        this.state.bargap * (datalength - 1)) /
+      datalength;
+      
+      const xAxislength=autobarwidth*datalength+this.state.bargap*(datalength-1)
+const yAxislength=d3.max(data)*this.state.yscalefactor
     const svg = d3
       .select(this.myRef.current)
       .append("svg")
@@ -37,27 +47,37 @@ class BarChart extends Component {
       .data(data)
       .enter()
       .append("rect")
-      .attr("x", (d, i) => this.state.leftmargin + i * (autobarwidth+this.state.bargap))
-      .attr("y", (d, i) => height - d-this.state.bargapy)
+      .attr(
+        "x",
+        (d, i) => this.state.leftmargin + i * (autobarwidth + this.state.bargap)
+      )
+      .attr("y", (d, i) => height - d*this.state.yscalefactor - this.state.bargapy)
       .attr("width", autobarwidth)
-      .attr("height", (d, i) => d)
+      .attr("height", (d, i) => d*this.state.yscalefactor)
       .attr("fill", "green");
-
-    const yScale = d3.scaleLinear().range([height, 0]);
 
     // Create the scale
     var xScale = d3
       .scaleBand()
       .domain(data) // This is what is written on the Axis: from 0 to 100
-      .range([this.state.leftmargin, this.state.leftmargin+autobarwidth*datalength+this.state.bargap*(datalength-1)]); // This is where the axis is placed: from 100px to 800px
+      .range([
+        this.state.leftmargin,
+        this.state.leftmargin +xAxislength,
+      ]); // This is where the axis is placed: from 100px to 800px
 
-    let xAxisGenerator = d3.axisBottom(xScale).tickSize(-200);
-    svg.append("g")
-              .call(xAxisGenerator)
-              .attr("transform",`translate(${0},${height - this.state.bargapy})`)
+    let xAxisGenerator = d3.axisBottom(xScale).tickSize(-yAxislength);
+    svg
+      .append("g")
+      .call(xAxisGenerator)
+      .attr("transform", `translate(${0},${height - this.state.bargapy})`);
+
+    var yScale = d3.scaleLinear().domain([120, 0]).range([height-yAxislength-this.state.bargapy, height-this.state.bargapy]);
+
+    let yAxisGenerator = d3.axisLeft(yScale).tickSize(-xAxislength)
+    svg.append("g").call(yAxisGenerator)
+    .attr("transform",`translate(${this.state.leftmargin},${0})`);
 
     // Draw the axis
-
   }
   render() {
     return <div className={"vis-container"} ref={this.myRef}></div>;
