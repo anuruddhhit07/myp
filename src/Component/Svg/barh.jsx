@@ -5,7 +5,7 @@ class BarChart extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      margin: { top: 40, right: 50, bottom: 50, left: 30 },
+      margin: { top: 10, right: 10, bottom: 20, left: 20 },
       barwidth: 50,
       bargap: 5,
       tickheight: 100,
@@ -25,7 +25,7 @@ class BarChart extends Component {
     const height =
       this.state.svgheight - this.state.margin.top - this.state.margin.bottom;
 
-    const data = [120, 50, 60, 70, 90, 100, 55, 85, 95];
+    const data = [220, 50, 60, 70, 90, 100, 55, 85, 95];
     const datalength = data.length;
     const autobarwidth =
       (width - this.state.bargap * (datalength - 1)) / datalength;
