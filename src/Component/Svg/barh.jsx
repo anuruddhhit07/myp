@@ -8,7 +8,7 @@ const data1 = [
   ["April", 26342, 18432],
   ["May", 34213, 29434],
   ["June", 50321, 45343],
-  ["July", 54273, 90002],
+  ["July", 54273, 95502],
   ["August", 60000, 30344],
   ["September", 44432, 32444],
   ["October", 21332, 9974],
@@ -33,7 +33,7 @@ class BarChart extends Component {
       tickheight: 100,
       yscalefactor1: 0.4,
       svgwidth: 600,
-      svgheight: 500,
+      svgheight: 400,
     };
     this.myRef = React.createRef();
   }
@@ -56,8 +56,6 @@ class BarChart extends Component {
 
     const xAxislength =
       autobarwidth * datalength + this.state.bargap * (datalength - 1);
-    const yscalefactor = (height - this.state.margin.top) / maxdata;
-    const yAxislength = maxdata * yscalefactor;
 
 
     const svg = d3
@@ -71,26 +69,16 @@ class BarChart extends Component {
         "transform",
         `translate(${this.state.margin.left}, ${this.state.margin.top})`
       );
-
-    svg
-      .selectAll("rect")
-      .data(data1)
-      .enter()
-      .append("rect")
-      .attr("x", (d, i) => i * (autobarwidth + this.state.bargap))
-      .attr("y", (d, i) => height - d.profit * yscalefactor)
-      .attr("width", autobarwidth)
-      .attr("height", (d, i) => d.profit * yscalefactor)
-      .attr("fill", "green");
-
-    // Create the scale
+      
+      
+          // Create the scale
     var xScale = d3
       .scaleBand()
       //.domain(data1) // This is what is written on the Axis: from 0 to 100
       .range([0, xAxislength]) // This is where the axis is placed: from 100px to 800px
       .domain(data1.map((d) => d.month));
 
-    let xAxisGenerator = d3.axisBottom(xScale).tickSize(-yAxislength);
+    let xAxisGenerator = d3.axisBottom(xScale).tickSize(-height);
     svg
       .append("g")
       .attr("transform", `translate(0, ${height})`)
@@ -98,11 +86,26 @@ class BarChart extends Component {
 
     var yScale = d3
       .scaleLinear()
-      .domain([d3.max(data1, (d) => d.profit), 0])
-      .range([height - yAxislength, height]);
+      .range([height,0])
+      .domain([0,d3.max(data1, (d) => d.profit)])
+    //  .range([height,0]);
 
     let yAxisGenerator = d3.axisLeft(yScale).tickSize(-xAxislength);
     svg.append("g").call(yAxisGenerator);
+
+    svg
+      .selectAll("rect")
+      .data(data1)
+      .enter()
+      .append("rect")
+      .attr("x", (d, i) => i * (autobarwidth + this.state.bargap))
+      .attr("y", (d, i) => yScale(d.profit))
+      .attr("width", autobarwidth)
+      .attr("height", (d, i) => height-yScale(d.profit))
+      .attr("fill", "green");
+
+    // Create the scale
+  
 
     // Draw the axis
   }
