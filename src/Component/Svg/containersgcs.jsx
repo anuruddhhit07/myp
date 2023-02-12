@@ -12,16 +12,18 @@ class Canvss extends Component {
   }
   componentDidMount() {
       const canvas=this.canvasRef.current
-    const width0 =
+    const width =
       this.state.cvwidth - this.state.margin.left - this.state.margin.right;
-    const height0 =
+    const height =
       this.state.cvheight - this.state.margin.top - this.state.margin.bottom;
       
     const context = canvas.getContext("2d");
-    this.drawChart(context);
+    this.drawChart(context,width,height);
   }
 
-  drawChart(ctx) {
+  drawChart(ctx,width,height) {
+    
+    
     ctx.fillStyle = "#000000";
     ctx.beginPath();
     ctx.arc(300, 200, 20, 0, 2 * Math.PI);
