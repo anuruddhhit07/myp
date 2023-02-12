@@ -25,9 +25,18 @@ h1 {
  height: 60vh; 
  padding: 0%;
  overflow-y: scroll;
+ 
 }
 .graph-svg-component {
     background-color: #d3db88;
     position: absolute; 
-    margin:  2%;
+    margin :2%;
+}
+
+.canvas-container{
+  background-color: beige;
+  position: relative;
+  padding: 0%;
+  margin: auto;
+  overflow-y: scroll;
 }
