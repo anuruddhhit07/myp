@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, Component } from "react";
 import * as d3 from "d3";
+
 const data = [
   ["January", 123432, 80342],
   ["February", 19342, 10342],
@@ -22,11 +23,16 @@ const data = [
   };
 });
 
+const range =(start, end, step = 1) =>{
+  const len = Math.floor((end - start) / step) + 1
+  return Array(len).fill().map((_, idx) => start + (idx * step))
+}
+
 class Canvss extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      margin: { top: 0, bottom: 20, left:20, right: 10 },
+      margin: { top: 0, bottom: 20, left:30, right: 10 },
       cvwidth: 600,
       cvheight: 500,
     };
@@ -45,8 +51,11 @@ class Canvss extends Component {
 
   drawChart(ctx,width,height) {
     const xScale=d3.scaleLinear().range([0,width]).domain([0,d3.max(data, (d) => d.index)])
-    
+    const yScale=d3.scaleLinear().range([0,height]).domain([0,d3.max(data, (d) => d.index)])
+    const ydatarange=[10,125]
     //const xaxis=xScale.domain(data.map((d) => d.index))
+    const yrangetick=range(ydatarange[0],ydatarange[1],50)
+    console.log(yrangetick)
     
     ctx.translate(this.state.margin.left,this.state.margin.bottom)
     
@@ -54,6 +63,13 @@ class Canvss extends Component {
     ctx.moveTo(0,height-this.state.margin.bottom)
     ctx.lineTo(width,height-this.state.margin.bottom)
     ctx.stroke()
+    
+    ctx.beginPath()
+    ctx.moveTo(0,0)
+    ctx.lineTo(0,height-this.state.margin.bottom)
+    ctx.stroke()
+    
+    
     
     data.forEach((d)=>{
       console.log("mylog",d.index,xScale(d.index))
@@ -65,10 +81,10 @@ class Canvss extends Component {
     })
     
     
-    ctx.fillStyle = "#000000";
-    ctx.beginPath();
-    ctx.arc(0, 0, 20, 0, 2 * Math.PI);
-    ctx.fill();
+   // ctx.fillStyle = "#000000";
+    //ctx.beginPath();
+    //ctx.arc(0, 0, 20, 0, 2 * Math.PI);
+    //ctx.fill();
     
     // Initialize path
 ctx.beginPath();
