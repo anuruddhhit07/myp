@@ -33,7 +33,7 @@ class BarChart extends Component {
       tickheight: 100,
       yscalefactor1: 0.4,
       svgwidth: 600,
-      svgheight: 600,
+      svgheight: 500,
     };
     this.myRef = React.createRef();
   }
@@ -59,7 +59,6 @@ class BarChart extends Component {
     const yscalefactor = (height - this.state.margin.top) / maxdata;
     const yAxislength = maxdata * yscalefactor;
 
-    console.log(data1);
 
     const svg = d3
       .select(this.myRef.current)

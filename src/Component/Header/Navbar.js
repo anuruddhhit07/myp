@@ -24,6 +24,8 @@ const NavigationBar = () => {
             <NavItem to='/contact' value='Contact' />
             <NavItem to='/images' value='Images' />
             <NavItem to='/svgimg' value='SVG' />
+            <NavItem to="/canvasimg" value='CANVAS'/>
+            <NavItem to='/svgcanvas' value='SVGCS'/>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

@@ -6,6 +6,8 @@ import { Routes, Route } from "react-router-dom";
 import MyVisComponent from "./Component/Svg/MyVisComponent";
 import Barchart from "./Component/Svg/barh.jsx"
 import Linechart from "./Component/Svg/Linechart.jsx"
+import CanvaS from "./Component/Svg/containersgcs"
+import SVGCS from "./Component/Svg/containersgcs.jsx"
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
         <Route exact path="/svgimg" element={<MyVisComponent />} />
          <Route path="/contact" element={<Barchart />} />
          <Route path="/images" element ={<Linechart/>}/>
+         <Route path="/canvasimg"element={<CanvaS/>}/>
+         <Route path="/svgcanvas" element={<SVGCS/>}/>
       
       </Routes>
       {/* </div> */}
