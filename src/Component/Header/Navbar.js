@@ -21,7 +21,7 @@ const NavigationBar = () => {
           <Nav >
             <NavItem to='/' value='Home' />
             <NavItem to='/about' value='About' />
-            <NavItem to='/contact' value='Contact' />
+            <NavItem to='/contact' value='SVG+D3' />
             <NavItem to='/images' value='Images' />
             <NavItem to='/svgimg' value='SVG' />
             <NavItem to="/canvasimg" value='CANVAS'/>

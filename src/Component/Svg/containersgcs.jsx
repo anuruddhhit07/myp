@@ -32,9 +32,9 @@ class Canvss extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      margin: { top: 0, bottom: 20, left:30, right: 10 },
+      margin: { top: 0, bottom: 20, left:30, right: 20 },
       cvwidth: 600,
-      cvheight: 500,
+      cvheight: 600,
     };
     this.canvasRef = React.createRef();
   }
@@ -43,7 +43,7 @@ class Canvss extends Component {
     const width =
       this.state.cvwidth - this.state.margin.left - this.state.margin.right;
     const height =
-      this.state.cvheight - this.state.margin.top - this.state.margin.bottom;
+      this.state.cvheight -this.state.margin.top - this.state.margin.bottom;
       
     const context = canvas.getContext("2d");
     this.drawChart(context,width,height);
@@ -51,11 +51,12 @@ class Canvss extends Component {
 
   drawChart(ctx,width,height) {
     const xScale=d3.scaleLinear().range([0,width]).domain([0,d3.max(data, (d) => d.index)])
-    const yScale=d3.scaleLinear().range([0,height]).domain([0,d3.max(data, (d) => d.index)])
-    const ydatarange=[10,125]
-    //const xaxis=xScale.domain(data.map((d) => d.index))
-    const yrangetick=range(ydatarange[0],ydatarange[1],50)
+    const ydatarange=[10,110]
+    const yrangetick=range(ydatarange[0],ydatarange[1],10)
     console.log(yrangetick)
+    const yScale=d3.scaleLinear().range([0,height-this.state.margin.bottom]).domain([d3.min(yrangetick),d3.max(yrangetick, (d) => d)])
+    
+    
     
     ctx.translate(this.state.margin.left,this.state.margin.bottom)
     
@@ -69,36 +70,49 @@ class Canvss extends Component {
     ctx.lineTo(0,height-this.state.margin.bottom)
     ctx.stroke()
     
+      yrangetick.forEach((d)=>{
+      console.log("mylog122",yScale(d),d,height)
+     ctx.moveTo( this.state.margin.left*0 , yScale(d));
+		ctx.lineTo( -this.state.margin.left/2 , yScale(d));
+	ctx.stroke();
+      
+    })
+    
     
     
     data.forEach((d)=>{
-      console.log("mylog",d.index,xScale(d.index))
-      console.log("exter",width,xScale(11))
-      ctx.moveTo( xScale(d.index), height-this.state.margin.bottom );
+      //console.log("mylog",d.index,xScale(d.index))
+     // console.log("exter",width,xScale(11))
+     //ctx.moveTo( this.state.margin.left , yScale(d));
+		//	ctx.lineTo( this.state.margin.left/2 , yScale(d));
+      
+	//	ctx.stroke();
+    
+    ctx.moveTo( xScale(d.index), height-this.state.margin.bottom );
 			ctx.lineTo( xScale(d.index), height-this.state.margin.bottom/2 );
 		ctx.stroke();
       
     })
     
     
-   // ctx.fillStyle = "#000000";
-    //ctx.beginPath();
-    //ctx.arc(0, 0, 20, 0, 2 * Math.PI);
-    //ctx.fill();
+    ctx.fillStyle = "green";
+    ctx.beginPath();
+    ctx.arc(xScale(2), height-this.state.margin.bottom- yScale(50), 20, 0, 2 * Math.PI);
+    ctx.fill();
     
     // Initialize path
-ctx.beginPath();
+//ctx.beginPath();
 
 // Go to the starting coordinate
-ctx.moveTo(100, 50);
+//ctx.moveTo(100, 50);
 
 // Draw 2 segments
-ctx.lineTo(300, 50);
-ctx.lineTo(200, 370);
+//ctx.lineTo(300, 50);
+//ctx.lineTo(200, 370);
 
 // Fill the shape
-ctx.fill();
-ctx.stroke();
+//ctx.fill();
+//ctx.stroke();
   }
 
   render() {
