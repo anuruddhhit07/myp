@@ -196,7 +196,7 @@ function zoomed({ transform }) {
   }
 const zoom = d3.zoom()
     .scaleExtent([1, 40])
-    .translateExtent([[-100, -100], [width + 90, height + 100]])
+    .translateExtent([[-100, this.state.margin.bottom+this.state.margin.top], [width + 90, height]])
    // .filter(filter)
     .on("zoom", zoomed);
     
