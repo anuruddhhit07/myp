@@ -1,5 +1,5 @@
 @echo off
-cmd /k "npm run dev"
+cmd /k "npm start"
 
 
 pause
