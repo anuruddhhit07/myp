@@ -105,6 +105,25 @@ class BarChart extends Component {
       .attr("fill", "green");
 
     // Create the scale
+    
+    svg.append("g").selectAll("circle")
+        .data(data1)
+        .enter()
+        .append("circle")
+        .attr("cx", function (d,i) { return i*(autobarwidth+5)+autobarwidth/2; } )
+        .attr("cy", function (d) { return yScale(d.profit); } )
+        .attr("r", 2)
+        //.attr("transform", "translate(" + 100 + "," + 100 + ")")
+        //.style("fill", "#CC0000");
+        
+    svg.selectAll('line')
+    .data(data1)
+    .enter()
+    .append('line')
+    .attr("x1", 0)
+    .attr("y1", 0)
+    .attr("x2", 200)
+    .attr("y2", 200); 
   
 
     // Draw the axis
