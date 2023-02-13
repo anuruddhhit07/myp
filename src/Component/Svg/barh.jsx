@@ -57,7 +57,6 @@ class BarChart extends Component {
     const xAxislength =
       autobarwidth * datalength + this.state.bargap * (datalength - 1);
 
-
     const svg = d3
       .select(this.myRef.current)
       .append("svg")
@@ -69,9 +68,8 @@ class BarChart extends Component {
         "transform",
         `translate(${this.state.margin.left}, ${this.state.margin.top})`
       );
-      
-      
-          // Create the scale
+
+    // Create the scale
     var xScale = d3
       .scaleBand()
       //.domain(data1) // This is what is written on the Axis: from 0 to 100
@@ -79,6 +77,7 @@ class BarChart extends Component {
       .domain(data1.map((d) => d.month));
 
     let xAxisGenerator = d3.axisBottom(xScale).tickSize(-height);
+
     svg
       .append("g")
       .attr("transform", `translate(0, ${height})`)
@@ -86,8 +85,8 @@ class BarChart extends Component {
 
     var yScale = d3
       .scaleLinear()
-      .range([height,0])
-      .domain([0,d3.max(data1, (d) => d.profit)])
+      .range([height, 0])
+      .domain([0, d3.max(data1, (d) => d.profit)]);
     //  .range([height,0]);
 
     let yAxisGenerator = d3.axisLeft(yScale).tickSize(-xAxislength);
@@ -101,32 +100,48 @@ class BarChart extends Component {
       .attr("x", (d, i) => i * (autobarwidth + this.state.bargap))
       .attr("y", (d, i) => yScale(d.profit))
       .attr("width", autobarwidth)
-      .attr("height", (d, i) => height-yScale(d.profit))
+      .attr("height", (d, i) => height - yScale(d.profit))
       .attr("fill", "green");
 
     // Create the scale
-    
-    svg.append("g").selectAll("circle")
-        .data(data1)
-        .enter()
-        .append("circle")
-        .attr("cx", function (d,i) { return i*(autobarwidth+5)+autobarwidth/2; } )
-        .attr("cy", function (d) { return yScale(d.profit); } )
-        .attr("r", 2)
-        //.attr("transform", "translate(" + 100 + "," + 100 + ")")
-        //.style("fill", "#CC0000");
-        
-    svg.selectAll('line')
-    .data(data1)
-    .enter()
-    .append('line')
-    .attr("x1", 0)
-    .attr("y1", 0)
-    .attr("x2", 200)
-    .attr("y2", 200); 
-  
 
-    // Draw the axis
+    svg
+      .append("g")
+      .selectAll("circle")
+      .data(data1)
+      .enter()
+      .append("circle")
+      .attr("cx", function (d, i) {
+        return i * (autobarwidth + 5) + autobarwidth / 2;
+      })
+      .attr("cy", function (d) {
+        return yScale(d.profit);
+      })
+      .attr("r", 2);
+    //.attr("transform", "translate(" + 100 + "," + 100 + ")")
+    //.style("fill", "#CC0000");
+
+    var linedata = data1.map((d, i) => {
+      return {
+        x: i * (autobarwidth + 5) + autobarwidth / 2,
+        y: yScale(d.profit),
+      };
+    });
+    console.log(linedata);
+   
+
+    const line = d3
+      .line()
+      .x((d) => d.x)
+      .y((d) => d.y)
+      .curve(d3.curveCatmullRom.alpha(0.5));
+
+    svg.append("g").append("path").datum(linedata).attr("d", line)
+    .style("stroke", "black")
+    .style("stroke-width", 2)
+    .style("fill", 'None')
+   
+    
   }
   render() {
     return <div className={"vis-container"} ref={this.myRef}></div>;
