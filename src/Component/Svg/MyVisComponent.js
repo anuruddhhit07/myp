@@ -59,6 +59,8 @@ export default class svgchart extends Component {
     const gx = svg.append("g");
     const gy = svg.append("g");
     
+    const dots = svg.append("g")
+    
         // find data range
     var xMin = d3.min(OHLC2, function (d) {
       return Math.min(d.time);
@@ -109,6 +111,9 @@ export default class svgchart extends Component {
         .attr("transform", `translate(${x(0)},0)`)
         .call(d3.axisLeft(scale).ticks(12 * (height / width)))
         .call((g) => g.select(".domain").attr("display", "none"));
+        
+        
+  
 
     // xAxis(gx,x)
     //yAx
@@ -154,11 +159,31 @@ export default class svgchart extends Component {
       .node();
 
     function redraw() {
+      d3.select('line').remove()
       const xr = tx().rescaleX(x);
       const yr = ty().rescaleY(y);
 
       gx.call(xAxis, xr);
       gy.call(yAxis, yr);
+      
+      var line = d3
+      .line()
+      .x(function (d,index) {
+        return xr(index) ;
+      })
+      .y(function (d) {
+        return yr(d.close);
+      });
+      
+      dots.append("path")
+      .datum(data)
+      .attr("class", "data-line")
+      .attr("d", line)
+      .style("stroke-width", 1)
+      .style("stroke", "black")
+      .style("fill", "None")
+      
+      
 
       // dots
       //.attr("cx", d => xr(d[0]))
