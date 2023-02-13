@@ -127,15 +127,6 @@ export default class MySvgCD extends Component {
       return d3.axisBottom(xScale).ticks(10);
     };
 
-    // add the X Axis
-    const gX=svg
-      .append("g")
-      .attr("transform", `translate(0, ${height})`)
-      .call(xAxisGenerator);
-
-    // add the Y Axis
-    const gY=svg.append("g").call(yAxisGenerator);
-    // .attr("stroke-width", .5)
 
     // // XgridLines
     svg
@@ -198,7 +189,7 @@ function zoomed({ transform }) {
   }
 const zoom = d3.zoom()
     .scaleExtent([1, 40])
-    .translateExtent([[-100, this.state.margin.bottom+this.state.margin.top], [width + 90, height]])
+    .translateExtent([[-300, this.state.margin.bottom+this.state.margin.top], [width + 200, height]])
    // .filter(filter)
     .on("zoom", zoomed);
     
@@ -253,6 +244,16 @@ const zoom = d3.zoom()
       .style("stroke-width", 1)
       .style("stroke", "black")
       .style("fill", "None")
+      
+          // add the X Axis
+    const gX=svg
+      .append("g")
+      .attr("transform", `translate(0, ${height})`)
+      .call(xAxisGenerator);
+
+    // add the Y Axis
+    const gY=svg.append("g").call(yAxisGenerator);
+    // .attr("stroke-width", .5)
       
       return Object.assign(svg.call(zoom).node(), {reset});
   }
