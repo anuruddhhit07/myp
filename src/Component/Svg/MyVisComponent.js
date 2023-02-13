@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef ,Component} from 'react';
 import "./styles.scss";
 
 export default function MyVisComponent() {
@@ -16,3 +16,9 @@ export default function MyVisComponent() {
     </>
   );
 }
+
+export class svgchart extends Component {
+  
+  
+}
+
