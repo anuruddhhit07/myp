@@ -212,17 +212,11 @@ const zoom = d3.zoom()
   }
   
   
-  var bar = svg.selectAll("path.svgcandle")
+  var ohlchart = svg.selectAll("path.svgcandle")
     .data(OHLC2)
     .enter().append("g");
 
-
-
-   var  ohlchart = svg
-      .selectAll("path.svgcandle")
-      .data(OHLC2)
-      .enter()
-      .append("path")
+   ohlchart.append("path")
       .attr("class", function (d) {
         return d.open < d.close ? "svgcandle up" : "svgcandle down";
       })
@@ -249,8 +243,8 @@ const zoom = d3.zoom()
     // .curve(d3.curveCatmullRom.alpha(0))
 
     // Data line
-    svg.append("g")
-      .append("path")
+   // svg.append("g")
+      ohlchart.append("path")
       .datum(data)
       .attr("class", "data-line")
       .attr("d", line)
