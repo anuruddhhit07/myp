@@ -26,6 +26,7 @@ const NavigationBar = () => {
             <NavItem to='/svgimg' value='SVG' />
             <NavItem to="/canvasimg" value='CANVAS'/>
             <NavItem to='/svgcanvas' value='SVGCS'/>
+            <NavItem to='/svgcd' value='SVGCD'/>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

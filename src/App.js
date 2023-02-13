@@ -8,6 +8,7 @@ import Barchart from "./Component/Svg/barh.jsx"
 import Linechart from "./Component/Svg/Linechart.jsx"
 import CanvaS from "./Component/Svg/containersgcs"
 import SVGCS from "./Component/Svg/containersgcs.jsx"
+import MySvgCD from "./Component/Svg/mysvgcd";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
          <Route path="/images" element ={<Linechart/>}/>
          <Route path="/canvasimg"element={<CanvaS/>}/>
          <Route path="/svgcanvas" element={<SVGCS/>}/>
+         <Route path="/svgcd" element={<MySvgCD/>}/>
       
       </Routes>
       {/* </div> */}

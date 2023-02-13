@@ -71,7 +71,7 @@ class Canvss extends Component {
     ctx.stroke()
     
       yrangetick.forEach((d)=>{
-      console.log("mylog122",yScale(d),d,height)
+      // console.log("mylog122",yScale(d),d,height)
      ctx.moveTo( -this.state.margin.left/2 , yScale(d));
 		ctx.lineTo( width , yScale(d));
 	ctx.stroke();
