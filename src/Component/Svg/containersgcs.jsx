@@ -72,8 +72,8 @@ class Canvss extends Component {
     
       yrangetick.forEach((d)=>{
       console.log("mylog122",yScale(d),d,height)
-     ctx.moveTo( this.state.margin.left*0 , yScale(d));
-		ctx.lineTo( -this.state.margin.left/2 , yScale(d));
+     ctx.moveTo( -this.state.margin.left/2 , yScale(d));
+		ctx.lineTo( width , yScale(d));
 	ctx.stroke();
       
     })
@@ -88,7 +88,7 @@ class Canvss extends Component {
       
 	//	ctx.stroke();
     
-    ctx.moveTo( xScale(d.index), height-this.state.margin.bottom );
+    ctx.moveTo( xScale(d.index),0* (height-this.state.margin.bottom) );
 			ctx.lineTo( xScale(d.index), height-this.state.margin.bottom/2 );
 		ctx.stroke();
       
