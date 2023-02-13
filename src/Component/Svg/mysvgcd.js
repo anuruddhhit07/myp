@@ -76,7 +76,9 @@ export default class MySvgCD extends Component {
       .attr(
         "transform",
         `translate(${this.state.margin.left}, ${this.state.margin.top})`
-      );
+      )
+      
+      
 
     // Take the current date and round it to the nearest minute
     var d2 = new Date(Math.round(new Date().getTime() / 60000) * 60000);
