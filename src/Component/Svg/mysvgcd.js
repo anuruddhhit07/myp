@@ -72,6 +72,7 @@ export default class MySvgCD extends Component {
       .attr("width", width + this.state.margin.left + this.state.margin.right)
       .attr("height", height + this.state.margin.top + this.state.margin.bottom)
       .attr("class", "graph-svg-component")
+      .attr("viewBox", [0, 0, width+60, height+60])
       .append("g")
       .attr(
         "transform",
