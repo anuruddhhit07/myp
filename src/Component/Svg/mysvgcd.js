@@ -32,7 +32,7 @@ export default class MySvgCD extends Component {
       bargap: 5,
       tickheight: 100,
       yscalefactor1: 0.4,
-      svgwidth: 1500,
+      svgwidth: 600,
       svgheight: 500,
     };
     this.myRef = React.createRef();
@@ -126,13 +126,13 @@ export default class MySvgCD extends Component {
     };
 
     // add the X Axis
-    svg
+    const gX=svg
       .append("g")
       .attr("transform", `translate(0, ${height})`)
       .call(xAxisGenerator);
 
     // add the Y Axis
-    svg.append("g").call(yAxisGenerator);
+    const gY=svg.append("g").call(yAxisGenerator);
     // .attr("stroke-width", .5)
 
     // // XgridLines
@@ -186,10 +186,39 @@ export default class MySvgCD extends Component {
     })
     .style("stroke-dasharray", "3,3")
     .style("stroke-opacity", .5);
+    
+    
+    
+function zoomed({ transform }) {
+    ohlchart.attr("transform", transform);
+    gX.call(xAxisGenerator.scale(transform.rescaleX(xScale)));
+    gY.call(yAxisGenerator.scale(transform.rescaleY(yScale)));
+  }
+const zoom = d3.zoom()
+    .scaleExtent([1, 40])
+    .translateExtent([[-100, -100], [width + 90, height + 100]])
+   // .filter(filter)
+    .on("zoom", zoomed);
+    
+      // prevent scrolling then apply the default filter
+  function filter(event) {
+    event.preventDefault();
+    return (!event.ctrlKey || event.type === 'wheel') && !event.button;
+  }
+  function reset() {
+    svg.transition()
+      .duration(750)
+      .call(zoom.transform, d3.zoomIdentity);
+  }
+  
+  
+  var bar = svg.selectAll("path.svgcandle")
+    .data(OHLC2)
+    .enter().append("g");
 
 
 
-    var p = svg
+   var  ohlchart = svg
       .selectAll("path.svgcandle")
       .data(OHLC2)
       .enter()
@@ -220,15 +249,16 @@ export default class MySvgCD extends Component {
     // .curve(d3.curveCatmullRom.alpha(0))
 
     // Data line
-    svg
-      .append("g")
+    svg.append("g")
       .append("path")
       .datum(data)
       .attr("class", "data-line")
       .attr("d", line)
       .style("stroke-width", 1)
       .style("stroke", "black")
-      .style("fill", "None");
+      .style("fill", "None")
+      
+      return Object.assign(svg.call(zoom).node(), {reset});
   }
 
   render() {

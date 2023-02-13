@@ -124,6 +124,6 @@ export const OHLC2 = [
   {"time": 1387212530, "open": 162, "close": 350, "high": 189, "low": 122},
   {"time": 1387212540, "open": 452, "close": 361, "high": 542, "low": 329},
   {"time": 1387212550, "open": 173, "close": 281, "high": 312, "low": 91},
-  {"time": 1387212480, "open": 183, "close": 265, "high": 271, "low": 165},
-  {"time": 1387212490, "open": 395, "close": 253, "high": 424, "low": 213}
+  {"time": 1387212560, "open": 183, "close": 265, "high": 271, "low": 165},
+  {"time": 1387212570, "open": 395, "close": 253, "high": 424, "low": 213}
 ];
