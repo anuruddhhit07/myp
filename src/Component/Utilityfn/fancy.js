@@ -80,8 +80,8 @@ export function cdataohlc() {
 
 
 export const OHLC2 = [
-  {"time": 1387212120, "open": 368, "close": 275, "high": 380, "low": 158},
-  {"time": 1387212130, "open": 330, "close": 350, "high": 389, "low": 310},
+  {"time": 1387212120, "open": 368, "close": 300, "high": 380, "low": 158},
+  {"time": 1387212130, "open": 330, "close": 250, "high": 389, "low": 310},
   {"time": 1387212140, "open": 213, "close": 253, "high": 289, "low": 213},
   {"time": 1387212150, "open": 180, "close": 150, "high": 189, "low": 110},
   {"time": 1387212160, "open": 310, "close": 350, "high": 389, "low": 310},

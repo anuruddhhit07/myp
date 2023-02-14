@@ -233,6 +233,7 @@ const zoom = d3.zoom()
       .y(function (d) {
         return yScale(d.close);
       });
+      
     // .curve(d3.curveCatmullRom.alpha(0))
 
     // Data line
