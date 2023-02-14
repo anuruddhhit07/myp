@@ -1,40 +1,27 @@
 import React, { useRef, Component } from "react";
 import "./styles.scss";
 import * as d3 from "d3";
+import Button from "react-bootstrap/Button";
 
 import { cdata, cdataohlc, OHLC2 } from "../Utilityfn/fancy";
 import { drawSVGCandle, drawSVGCandleohlc } from "./Draw/drawSVGCandle";
 import * as _ from "underscore";
 
-export function MyVisComponent() {
-  const refElement = useRef(null);
-
-  return (
-    <>
-      <h1>I am from MyVisComponent </h1>
-      <div className="vis-container" ref={refElement}>
-        <svg>
-          <circle cx={50} cy={50} r={10} fill="red" />
-        </svg>
-      </div>
-    </>
-  );
-}
-
 export default class svgchart extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      margin: { top: 40, right: 20, bottom: 20, left: 40 },
+      margin: { top: 20, right: 20, bottom: 0, left: 30 },
       barwidth: 50,
       bargap: 5,
       tickheight: 100,
       yscalefactor1: 0.4,
       svgwidth: 500,
-      svgheight: 500,
+      svgheight: 300,
+      xaxispad: 20,
     };
     this.myRef = React.createRef();
-    //  this.redraw = this.redraw.bind(this)
+    // this.reset = this.reset.bind(this);
   }
   componentDidMount() {
     // const data=cdata()
@@ -49,29 +36,83 @@ export default class svgchart extends Component {
     this.drawChart(OHLC2);
   }
   drawChart(data) {
-    const width = this.state.svgwidth;
-    const height = Math.min(this.state.svgwidth * 0.8, 500);
+    // const width = this.state.svgwidth;
+    // const height = Math.min(this.state.svgwidth * 0.8, 500);
+    const cdwidth = 5;
+    const width =
+      this.state.svgwidth - this.state.margin.left - this.state.margin.right;
+    const height =
+      this.state.svgheight - this.state.margin.top - this.state.margin.bottom;
+
+    // const height = Math.min(this.state.svgwidth * 0.8, height1);
+
+    data.forEach(function (d) {
+      d.time = new Date(d.time * 1000);
+    });
+
     const svg = d3
       .select(this.myRef.current)
       .append("svg")
-      .attr("viewBox", [0, 0, width, height]);
+      // .attr("width", width + this.state.margin.left + this.state.margin.right)
+      // .attr("height", height + this.state.margin.top + this.state.margin.bottom)
+      .attr("viewBox", [0, 0, this.state.svgwidth, this.state.svgheight])
+      .attr("class", "graph-svg-component");
+    // .append("g")
+    // .attr(
+    //   "transform",
+    //   `translate(${this.state.margin.left}, ${this.state.margin.top})`
+    // )
+
     const vo = svg.append("path");
     const gx = svg.append("g");
     const gy = svg.append("g");
-    
-    //const dots = svg.append("g")
-    const dots = svg.append("g")
-    .selectAll("ellipse")
-    .data(data)
-    .join("ellipse")
-      .attr("fill", () => 0);
 
-    
-        // find data range
-    var xMin = d3.min(OHLC2, function (d) {
+    var clip = svg
+      .append("defs")
+      .append("svg:clipPath")
+      .attr("id", "clip")
+      .append("svg:rect")
+      .attr("id", "clip-rect")
+      .attr("x", `${this.state.margin.left}`)
+      .attr("y", `${this.state.margin.top}`)
+      .attr("width", width - this.state.margin.right - this.state.margin.left)
+      .attr(
+        "height",
+        height -
+          this.state.margin.bottom -
+          this.state.margin.top -
+          this.state.xaxispad
+      );
+
+    // var chartBody = svg.append("g").attr("clip-path", "url(#clip)");
+
+    //const dots = svg.append("g")
+    const dots = svg
+      .append("g")
+      .selectAll("ellipse")
+      .data(data)
+      .join("ellipse")
+      .attr("fill", () => 0)
+      .attr("clip-path", "url(#clip)");
+
+    const ohlchart = svg
+      .selectAll("path.svgcandle")
+      .data(data)
+      .enter()
+      .append("g")
+      .append("path")
+      .attr("clip-path", "url(#clip)");
+
+    const linechart = svg
+      .append("path")
+      .datum(data)
+      .attr("clip-path", "url(#clip)");
+
+    // find data range
+    var xMin = d3.min(data, function (d) {
       return Math.min(d.time);
     });
-    var xMax = d3.max(OHLC2, function (d) {
+    var xMax = d3.max(data, function (d) {
       return Math.max(d.time);
     });
 
@@ -83,46 +124,80 @@ export default class svgchart extends Component {
     });
 
     var x = d3
-      .scaleLinear()
-     .domain(
-       //[xMin,xMax]
-       d3.extent(data, function (d,index) {
-         return index;
-       })
+      .scaleTime()
+      .domain(
+        d3.extent(data, function (d, index) {
+          return d.time;
+        })
       )
-      .range([30, width - 10])
+      .range([this.state.margin.left, width - this.state.margin.right])
       .nice();
 
-    var y = d3.scaleLinear().domain([yMin, yMax]).range([height, 0]).nice();
+    var y = d3
+      .scaleLinear()
+      .domain([yMin, yMax])
+      .range([
+        height - this.state.margin.bottom,
+        this.state.margin.top + this.state.margin.bottom,
+      ])
+      .nice();
 
-    // var x = d3.scaleLinear()
-    //.domain(d3.extent(data, d => d[0]))
-    //.range([30, width - 10])
-    //.nice()
-
-    // var y = d3.scaleLinear()
-    // .domain([yMin,yMax])
-    //.domain(d3.extent(data, d => d[1]))
-    //.range([height - 20, 10])
-    // .nice()
+    console.log(
+      "AA",
+      this.state.svgheight,
+      height,
+      height - this.state.margin.bottom
+    );
 
     const xAxis = (g, scale) =>
       g
-        .attr("transform", `translate(0,${y(yMin)})`)
-        .call(d3.axisBottom(scale).ticks(12))
-        .call((g) => g.select(".domain").attr("display", "none"));
+        .attr(
+          "transform",
+          `translate(${x(xMin) - this.state.margin.left},${y(yMin)})`
+        )
+        .call(d3.axisBottom(scale).ticks(12));
+    // .call((g) => g.select(".domain").attr("display", "none"));
 
     const yAxis = (g, scale) =>
       g
-        .attr("transform", `translate(${x(0)},0)`)
-        .call(d3.axisLeft(scale).ticks(12 * (height / width)))
-        .call((g) => g.select(".domain").attr("display", "none"));
-        
-        
-  
+        .attr(
+          "transform",
+          // `translate(${x(0)},${y(yMin) - height + this.state.margin.bottom})`
+          `translate(${x(xMin)},${y(yMin) - height + this.state.margin.bottom})`
+        )
+        .call(d3.axisLeft(scale).ticks(12 * (height / width)));
+    // .call((g) => g.select(".domain").attr("display", "none"));
 
-    // xAxis(gx,x)
-    //yAx
+    svg
+      .append("g")
+      .selectAll("lines-ax")
+      .data(data.filter((v, i) => i % 2 == 0))
+      .enter()
+      .append("line")
+      .attr("class", "x grid")
+      .attr("x1", function (d) {
+        return x(d.time) + cdwidth / 2;
+      })
+      .attr("y1", function (d) {
+        return height;
+      })
+      .attr("x2", function (d) {
+        return x(d.time) + cdwidth / 2;
+      })
+      .attr("y2", function (d) {
+        return 0;
+      });
+
+    // style gridlines
+    d3.selectAll(".x.grid")
+      // .selectAll(".tick.major")
+      .style("stroke-dasharray", function (d, i) {
+        return "3,3";
+        // return i !== 0 ? "3,3" : null;
+      })
+      .style("stroke-dasharray", "2,5")
+      .style("stroke-opacity", 0.2);
+
     // z holds a copy of the previous transform, so we can track its changes
     let z = d3.zoomIdentity;
 
@@ -135,7 +210,20 @@ export default class svgchart extends Component {
     gy.call(zoomY).attr("pointer-events", "none");
 
     // active zooming
-    const zoom = d3.zoom().on("zoom", function (e) {
+    const zoom = d3.zoom().on("zoom", zoomhandel);
+
+    d3.select("#reset").on("click", reset);
+    d3.select("#panLeft").on("click", panLeft);
+    d3.select("#panRight").on("click", panRight);
+    d3.select("#center").on("click", centerfit);
+    d3.select("#horizontal").on("click", Horizontal);
+
+    return svg
+      .call(zoom)
+      .call(zoom.transform, d3.zoomIdentity.scale(0.8))
+      .node();
+
+    function zoomhandel(e) {
       const t = e.transform;
       const k = t.k / z.k;
       const point = center(e, this);
@@ -144,7 +232,7 @@ export default class svgchart extends Component {
       const doX = point[0] > x.range()[0];
       const doY = point[1] < y.range()[0];
       const shift = e.sourceEvent && e.sourceEvent.shiftKey;
-
+      // console.log('kkk',k);
       if (k === 1) {
         // pure translation?
         doX && gx.call(zoomX.translateBy, (t.x - z.x) / tx().k, 0);
@@ -158,11 +246,82 @@ export default class svgchart extends Component {
       z = t;
 
       redraw();
-    });
-    return svg
-      .call(zoom)
-      .call(zoom.transform, d3.zoomIdentity.scale(0.8))
-      .node();
+    }
+
+    function center(event, target) {
+      if (event.sourceEvent) {
+        const p = d3.pointers(event, target);
+        return [d3.mean(p, (d) => d[0]), d3.mean(p, (d) => d[1])];
+      }
+      return [width / 2, height / 2];
+    }
+
+    function initZoom() {
+      svg.transition().call(zoom);
+    }
+
+    function reset() {
+      svg.transition().duration(1).call(zoom.transform, d3.zoomIdentity);
+    }
+
+    function panLeft() {
+      svg.transition().call(zoom.translateBy, -150, 0);
+    }
+
+    function panRight() {
+      svg.transition().call(zoom.translateBy, 150, 0);
+    }
+
+    function centerfit() {
+      svg.transition().call(zoom.translateTo, 0.5 * width, 0.5 * height);
+    }
+
+    function Horizontal(e) {
+      var self = this;
+      var m, m1, m2, horizontal, isDown = false, isDragging = false, click = 1, pathArray = [], pathArray1 = [],
+          x1, y1, x2, y2, slope, isLeft;
+      
+      var lineFunction = d3.line()
+                          .x(function(d) { return d.time; })
+                          .y(function(d) { return d.open; })
+                          // .interpolate("linear");
+
+                        //   .x(function(d) { return d.x; })
+                        // .y(function(d) { return d.y; })
+                        // .interpolate("linear");
+      const point = center(e, this);
+
+      // console.log('point',point);
+      svg.on('mousedown', function() {
+          isDown = !isDown;
+          m1 = d3.pointer(this);
+          console.log(m1);
+          self.pathArray = [{ x: m1[0], y: m1[1] }, { x: 0, y: m1[1] }, { x: 0, y: m1[1] } ];
+          if(!isDragging) {
+              if(click == 1){ 
+                  self.horizElement = d3.select('svg').append('path').attr({'class': 'horizontal'});//.call(dragP);
+                  updatePath();
+              }                
+          } else {
+              isDragging = true;
+          }
+          click++;
+      })
+      
+      .on('mousemove', function() {
+          m2 = d3.pointer(this);       
+          if (isDown && !isDragging && click == 2) {               
+              updatePath();
+          }
+      });
+      
+      function updatePath() {
+          horizontal = d3.select(self.horizElement[0][0]).data(self.pathArray);
+          horizontal.attr('d', lineFunction(self.pathArray));
+      }
+      
+  }
+  
 
     function redraw() {
       const xr = tx().rescaleX(x);
@@ -170,81 +329,56 @@ export default class svgchart extends Component {
 
       gx.call(xAxis, xr);
       gy.call(yAxis, yr);
-      
-      
-      dots
-      .attr("cx", function(d,index) {return xr(index)})
-      .attr("cy", function(d) {return yr(d.close)})
-      .attr("rx", 6 * Math.sqrt(tx().k))
-      .attr("ry", 6 * Math.sqrt(ty().k));
 
-      
-     // var line = d3
-    //  .line()
-    //  .x(function (d,index) {
-   //     return xr(index) ;
- //     })
-  //    .y(function (d) {
-   //     return yr(d.close);
-   //   });
-      
-   //   dots.append("path")
-   //   .datum(data)
-   //   .attr("class", "data-line")
-   //   .attr("d", linde)
-   //   .style("stroke-width", 1)
-  //    .style("stroke", "black")
-    //  .style("fill", "None")
-      
-      
+      ohlchart
+        .attr("class", function (d) {
+          return d.open < d.close ? "svgcandle up" : "svgcandle down";
+        })
+        .attr("d", function (d, index) {
+          // return drawSVGCandle(d.xCoordinate, d.yCoordinate, d.candleWidth, d.upper, d.body, d.lower);
+          return drawSVGCandleohlc(
+            xr(d.time),
+            yr(d.open),
+            yr(d.high),
+            yr(d.low),
+            yr(d.close),
+            cdwidth
+          );
+        });
 
-      // dots
-      //.attr("cx", d => xr(d[0]))
-      // .attr("cy", d => yr(d[1]))
-      // .attr("rx", 6 * Math.sqrt(tx().k))
-      //.attr("ry", 6 * Math.sqrt(ty().k));
+      var line = d3
+        .line()
+        .x(function (d) {
+          return xr(d.time) + cdwidth / 2;
+        })
+        .y(function (d) {
+          return yr(d.close);
+        });
+      //  .curve(d3.curveCatmullRom.alpha(1))
 
-      //  vo.attr(
-      //   "d",
-      //  d3.Delaunay.from(data.map(d => [xr(d[0]), yr(d[1])]))
-      //   .voronoi([35, 0, width, height - 25])
-      //  .render()
-      //  )
-      // .attr("fill", "none")
-      // .attr("stroke", "#ccc")
-      // .attr("stroke-width", 0.5);
+      // Data line
+      // svg.append("g")
+
+      linechart
+        .attr("class", "data-line")
+        .attr("d", line)
+        .style("stroke-width", 0.5)
+        .style("stroke", "black")
+        .style("fill", "None");
     }
-
-    // center the action (handles multitouch)
-  //  function center(event, target) {
-  //    if (event.sourceEvent) {
- //       const p = d3.pointers(event, target);
-  //      return [d3.mean(p, d => d[0), d3.mean(p, d => d[1])];
-      //  return [
-        //  d3.mean(p, function (d, index) {
-        //    return index;
-    //      }),
-     //     d3.mean(p, function (d) {
-     //       return d.high;
-   //       }),
-   //     ];
- //     }
-   //   return [width / 2, height / 2];
-  //  }
-  
-  function center(event, target) {
-    if (event.sourceEvent) {
-      const p = d3.pointers(event, target);
-      //return [d3.mean(p, d => d[0]), d3.mean(p, d => d[1])];
-    }
-    return [width / 2, height / 2];
-  }
-  
-  
-  
   }
 
   render() {
-    return <div className={"svgcd-container"} ref={this.myRef}></div>;
+    return (
+      <>
+        <button id="reset"> Reset </button>
+        <button id="panLeft"> panLeft </button>
+        <button id="panRight"> panRight </button>
+        <button id="center"> center </button>
+        <button id="horizontal">Horizontal Line</button>
+
+        <div className={"svgcd-container"} ref={this.myRef}></div>
+      </>
+    );
   }
 }
