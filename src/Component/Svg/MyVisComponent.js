@@ -59,7 +59,13 @@ export default class svgchart extends Component {
     const gx = svg.append("g");
     const gy = svg.append("g");
     
+    //const dots = svg.append("g")
     const dots = svg.append("g")
+    .selectAll("ellipse")
+    .data(data)
+    .join("ellipse")
+      .attr("fill", () => 0);
+
     
         // find data range
     var xMin = d3.min(OHLC2, function (d) {
@@ -159,29 +165,36 @@ export default class svgchart extends Component {
       .node();
 
     function redraw() {
-      d3.select('line').remove()
       const xr = tx().rescaleX(x);
       const yr = ty().rescaleY(y);
 
       gx.call(xAxis, xr);
       gy.call(yAxis, yr);
       
-      var line = d3
-      .line()
-      .x(function (d,index) {
-        return xr(index) ;
-      })
-      .y(function (d) {
-        return yr(d.close);
-      });
       
-      dots.append("path")
-      .datum(data)
-      .attr("class", "data-line")
-      .attr("d", line)
-      .style("stroke-width", 1)
-      .style("stroke", "black")
-      .style("fill", "None")
+      dots
+      .attr("cx", function(d,index) {return xr(index)})
+      .attr("cy", function(d) {return yr(d.close)})
+      .attr("rx", 6 * Math.sqrt(tx().k))
+      .attr("ry", 6 * Math.sqrt(ty().k));
+
+      
+     // var line = d3
+    //  .line()
+    //  .x(function (d,index) {
+   //     return xr(index) ;
+ //     })
+  //    .y(function (d) {
+   //     return yr(d.close);
+   //   });
+      
+   //   dots.append("path")
+   //   .datum(data)
+   //   .attr("class", "data-line")
+   //   .attr("d", linde)
+   //   .style("stroke-width", 1)
+  //    .style("stroke", "black")
+    //  .style("fill", "None")
       
       
 
