@@ -1,4 +1,7 @@
-const NetGraphContainer = ({ data }) => {
+import React, { useEffect, useRef ,useState} from "react";
+import NetGraph from "./ChartD3.jsx"
+
+const NetGraphContainer2 = ({ data }) => {
 	const netGraphRef = useRef(null)
 	const [graph, setGraph] = useState(null)
 
@@ -11,8 +14,28 @@ const NetGraphContainer = ({ data }) => {
 	}, [graph, data])
 
 	return (
-	    <div ref = { netGraphRef }> </div>
+	    <div ref = { netGraphRef }> hi </div>
 	)
 }
 
-export default NetGraphContainer
+export default class NetGraphContainer extends React.Component {
+ constructor(props) {
+   super(props);
+
+   this.myReference = React.createRef();
+   this.graph=new NetGraph(this.myReference)
+}
+componentDidMount(){
+	
+}
+
+ render() {
+   return (
+	   <>
+	   <h2> Im in Container </h2>
+     <div ref={this.myReference}>
+     </div>
+	 </>
+  );
+ }
+}

@@ -7,6 +7,10 @@ class NetGraph {
 		vis.g = d3.select(element)
 		vis.update()
 	}
+	componentDidMount(){
+		
+	}
+	
 	//update the graph when props change
 	update() {
 		let vis = this
