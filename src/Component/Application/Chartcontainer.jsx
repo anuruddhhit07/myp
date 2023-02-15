@@ -1,3 +1,6 @@
+import React, { useEffect, useRef ,useState} from "react";
+import NetGraph from "./ChartD3.jsx"
+
 const NetGraphContainer = ({ data }) => {
 	const netGraphRef = useRef(null)
 	const [graph, setGraph] = useState(null)
@@ -11,7 +14,7 @@ const NetGraphContainer = ({ data }) => {
 	}, [graph, data])
 
 	return (
-	    <div ref = { netGraphRef }> </div>
+	    <div ref = { netGraphRef }> hi </div>
 	)
 }
 
