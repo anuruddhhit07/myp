@@ -12,9 +12,9 @@ export default function ReactComponent() {
   const refElement = useRef(null);
 
   useEffect(fetchData, []);
-   //useEffect(handleResizeEvent, []);
+   useEffect(handleResizeEvent, []);
   useEffect(initVis, [ data ]);
-//  useEffect(updateVisOnResize, [ width, height ]);
+  useEffect(updateVisOnResize, [ width, height ]);
 
   function fetchData() {
     Promise.resolve().then(() => setData(['a', 'b', 'c']));
