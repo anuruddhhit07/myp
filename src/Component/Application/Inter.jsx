@@ -1,5 +1,6 @@
 import React, { useRef, Component } from "react";
 
+
 export default class EntryChart extends Component {
   constructor() {
     super();
