@@ -1,26 +1,27 @@
 import * as d3 from 'd3';
 
 class NetGraph {
-	constructor(element) {
+	constructor(element,props) {
 		//initialize graph
-		let vis = this
-		vis.g = d3.select(element)
+		//let vis = this
+		//vis.g = d3.select(element)
 		//this.elnode=d3.select(element)
 		//this.data=[1,2,4]
 		//vis.update()
 		//this.update=this.update.bind(this)
-	//let svg = d3.select(element).append('svg')
-     // .attr('class', 'd3')
-    //  .attr('width', 200)
-     // .attr('height', 300);
+	this.svg = d3.select(element).append('svg')
+     .attr('class', 'd3')
+	 .style('background-color','white')
+     .attr('width', props.width)
+     .attr('height', props.height);
 	  
-	//let aa=svg.selectAll("p")
-	//.data([1,2,3])
-	//.enter()
-	//.append("p")
-	//.text(function(){
-	//	return "vaule"
-//	})
+	this.svg.selectAll("p")
+	.data([1,2,3])
+	.enter()
+	.append("p")
+	.text(function(){
+		return "vaule"
+	})
 	}
 	
 	//componentDidMount(){
