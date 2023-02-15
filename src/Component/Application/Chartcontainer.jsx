@@ -7,17 +7,20 @@ export default class NetGraphContainer extends React.Component {
    super(props);
 
    this.myReference = React.createRef();
+  // let gg= NetGraph(this.myReference)
+   //NetGraph(this.myReference)
   //var graph= NetGraph(this.myReference)
 }
 
-componentDidMount() {
-   this.update();
- }
+//componentDidMount() {
+ //  this.update();
+// }
 
-update(){
-  var graph= NetGraph(this.myReference)
+//update(){
+  //var graph= NetGraph(this.myReference)
+ //// graph.update()
   
-}
+//}
 //componentDidMount(){
 //	 NetGraph(this.myReference)
 //}
