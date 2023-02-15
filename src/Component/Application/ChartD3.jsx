@@ -14,14 +14,24 @@ class NetGraph {
 	 .style('background-color','white')
      .attr('width', props.width)
      .attr('height', props.height);
+	const data=[1,2,3]
+	
+	this.svg.selectAll('circle')
+      .data(data)
+      .enter()
+      .append('circle')
+      .style('fill', 'red')
+      .attr('cx', () => Math.random() * props.width)
+      .attr('cy', () => Math.random() * props.height)
+      .attr('r', 10)
 	  
-	this.svg.selectAll("p")
-	.data([1,2,3])
-	.enter()
-	.append("p")
-	.text(function(){
-		return "vaule"
-	})
+//	this.svg.selectAll("p")
+//	.data(dataa)
+//	.enter()
+//	.append("p")
+//	.text(function(d){
+//		return "vaule"+ d
+//	})
 	}
 	
 	//componentDidMount(){
