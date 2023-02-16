@@ -14,7 +14,7 @@ export default function ReactComponent() {
   useEffect(fetchData, []);
    useEffect(handleResizeEvent, []);
   useEffect(initVis, [ data ]);
-  useEffect(updateVisOnResize, [ width, height ]);
+  // useEffect(updateVisOnResize, [ width, height ]);
 
   function fetchData() {
     Promise.resolve().then(() => setData(['a', 'b', 'c']));
@@ -42,18 +42,22 @@ export default function ReactComponent() {
         data,
         width,
         height,
-        onDatapointClick: setActive
+        onDatapointClick: setActive,
+        onDatapointClick2: function(value){ return setActive(value) }
       };
       vis = new D3Component(refElement.current, d3Props);
+      console.log('vis',vis);
     }
   }
 
   function updateVisOnResize() {
+    console.log(vis);
     vis && vis.resize(width, height);
   }
 
   return (
     <div className='react-world'>
+      {console.log(active)}
       <div>{active}</div>
       <div ref={refElement}/>
     </div>

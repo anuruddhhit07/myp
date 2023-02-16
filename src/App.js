@@ -11,7 +11,7 @@ import SVGCS from "./Component/Svg/containersgcs.jsx"
 import MySvgCD from "./Component/Svg/mysvgcd";
 //import D3Chart from "./Component/Application/Inter.jsx"
 import D3Chart from "./Component/Application/ReactComponent.jsx"
-
+import EnterApi from "./Component/App2/EnterApi";
 
 function App() {
   return (
@@ -31,6 +31,7 @@ function App() {
          <Route path="/svgcanvas" element={<SVGCS/>}/>
          <Route path="/svgcd" element={<MySvgCD/>}/>
          <Route path="/cwrapper" element={<D3Chart/>}/>
+         <Route path="/app2" element={<EnterApi/>}/>
       
       </Routes>
       {/* </div> */}

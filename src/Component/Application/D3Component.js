@@ -16,7 +16,7 @@ class D3Component {
       .style('background-color', 'white')
       .attr('width', width)
       .attr('height', height);
-    //this.updateDatapoints();
+    this.updateDatapoints();
   }
 
   updateDatapoints = () => {
