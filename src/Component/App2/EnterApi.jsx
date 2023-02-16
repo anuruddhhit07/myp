@@ -14,7 +14,7 @@ const EnterApi = () => {
   const dimensions = {
     width: 600,
     height: 600,
-    margin: { top:10, right: 50, bottom: 40, left: 70 },
+    margin: { top:20, right: 15, bottom: 20, left: 40 },
   };
   const { width, height, margin = {} } = dimensions;
   const data = testdata;
