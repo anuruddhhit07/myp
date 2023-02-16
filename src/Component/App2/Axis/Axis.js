@@ -1,27 +1,38 @@
-import React from "react";
-import PropTypes from "prop-types";
-import * as d3 from "d3";
- 
-const Axis = ({
-  type, scale, ticks, transform, tickFormat, disableAnimation, ...props
-}) => {
-  const ref = React.useRef(null);
-  React.useEffect(() => {
-    const axisGenerator = type === "left" ? d3.axisLeft : d3.axisBottom;
-    const axis = axisGenerator(scale).ticks(ticks).tickFormat(tickFormat);
-    const axisGroup = d3.select(ref.current);
-    if (disableAnimation) {
-      axisGroup.call(axis);
-    } else {
-      axisGroup.transition().duration(750).ease(d3.easeLinear).call(axis);
+import React, { useRef,useEffect } from "react";
+import AxisD3 from "./Axis3D";
+
+
+export default function Axis(props) {
+  const { dimensions, data,msg,controller } = props;
+  const refElement = useRef(null);
+//   console.log('Axis',props);
+    
+  useEffect(initVis, [ dimensions ]);
+
+  
+
+  function initVis() {
+    if(dimensions) {
+      const d3Props = {
+        msg,
+        data,
+        dimensions,
+        controller
+        // onDatapointClick2: function(value){ return setActive(value) }
+      };
+
+    //   upseprop=useController1(data,200,300)
+    //   console.log(upseprop);
+      let vis = new AxisD3(refElement.current, d3Props);
+    //   console.log('vis',vis);
     }
-    axisGroup.select(".domain").remove();
-    axisGroup.selectAll("line").remove();
-    axisGroup.selectAll("text")
-      .attr("opacity", 0.5)
-      .attr("color", "white")
-      .attr("font-size", "0.75rem");
-  }, [scale, ticks, tickFormat, disableAnimation]);
- 
-  return <g ref={ref} transform={transform} {...props} />;
-};
+  }
+
+  return (
+    <>
+   
+      {/* <div> {props.msg}</div> */}
+      <div ref={refElement} />
+    </>
+  );
+}

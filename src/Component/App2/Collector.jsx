@@ -4,7 +4,7 @@ import CanvasContainer from "./CanvasContainer/CanvasContainer";
 export default class Collector extends Component {
   constructor(props) {
     super(props);
-    console.log("props", props);
+    // console.log("props", props);
 
     this.childrenarray = this.props.children;
     this.welcome(this.childrenarray);
@@ -13,17 +13,17 @@ export default class Collector extends Component {
   }
 
   welcome = (child) => {
-    console.log(`Hello from ${this.props.children.props.msg} the child`);
+    // console.log(`Hello from collector`);
   };
 
-  childrenWithProps=React.cloneElement(this.props.children,this.props)
+//   childrenWithProps=React.cloneElement(this.props.children,this.props)
 
-//   childrenWithProps = Children.map(this.props.children, (child) => {
-//     if (React.isValidElement(child)) {
-//       return React.cloneElement(child,this.props);
-//     }
-//     return child;
-//   });
+  childrenWithProps = Children.map(this.props.children, (child) => {
+    if (React.isValidElement(child)) {
+      return React.cloneElement(child,this.props);
+    }
+    return child;
+  });
 
 
 
@@ -34,7 +34,7 @@ export default class Collector extends Component {
 
         hello
         <CanvasContainer  dimensions={dimensions} data={data} />
-        {console.log(this.childrenWithProps)}
+        {/* {console.log(this.childrenWithProps)} */}
         
         {this.childrenWithProps}
 

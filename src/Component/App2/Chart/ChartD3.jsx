@@ -15,8 +15,8 @@ export default class ChartD3 {
       this.containerEl = containerEl;
     //   this.props = props;
       const {dimensions: { width, height,margin } ,msg} = props;
-      console.log(msg);
-      console.log(dataset);
+    //   console.log(msg);
+    //   console.log(dataset);
       
 
       this.svg = d3

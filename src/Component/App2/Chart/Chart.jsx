@@ -4,7 +4,7 @@ import ChartD3 from "./ChartD3";
 export default function Chart(props) {
   const { dimensions, msg } = props;
   const refElement = useRef(null);
-  console.log(props);
+  // console.log(props);
  
   useEffect(initVis, [ dimensions ]);
 
@@ -20,7 +20,7 @@ export default function Chart(props) {
       };
 
       let vis = new ChartD3(refElement.current, d3Props);
-      console.log('vis',vis);
+      // console.log('vis',vis);
     }
   }
 

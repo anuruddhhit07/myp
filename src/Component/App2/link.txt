@@ -1,2 +1,3 @@
 https://www.developerway.com/posts/react-elements-children-parents
 https://stackoverflow.com/questions/32370994/how-to-pass-props-to-this-props-children
+https://blog.griddynamics.com/using-d3-js-with-react-js-an-8-step-comprehensive-manual/
