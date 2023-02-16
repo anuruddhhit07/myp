@@ -28,8 +28,8 @@ export default class AxisD3 {
     let xAxisGenerator = d3.axisBottom(xScale);
     let yAxisGenerator = d3.axisLeft(yScale);
 
-    this.svgx.attr("transform", `translate(0, ${height+margin.top})`).call(xAxisGenerator);
-    this.svgy.attr("transform", `translate(${margin.left}, ${margin.top})`).call(yAxisGenerator);
+    this.svgx.attr("transform", `translate(0, ${height-margin.bottom})`).call(xAxisGenerator);
+    this.svgy.attr("transform", `translate(${margin.left}, ${0})`).call(yAxisGenerator);
     // //   this.updateDatapoints();
   }
 
