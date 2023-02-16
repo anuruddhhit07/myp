@@ -6,8 +6,8 @@ export default class CanvasD3 {
   svg;
     
     constructor(containerEl, props) {
-        console.log(containerEl);
-        console.log(props);
+        // console.log(containerEl);
+        // console.log(props);
         
       this.containerEl = containerEl;
     //   this.props = props;
@@ -16,9 +16,10 @@ export default class CanvasD3 {
       this.svg = d3
         .select(containerEl)
         .append("svg")
+        .attr("id", "bg")
         .style("background-color", "white")
         .attr("width", width + margin.left + margin.right)
-        .attr("height", height +margin.top + margin.bottom);
+        .attr("height", height +margin.top + margin.bottom)
     // //   this.updateDatapoints();
     }
 

@@ -46,3 +46,17 @@ export const testdata = [
   {"time": 1387212560, "open": 183, "close": 265, "high": 271, "low": 165},
   {"time": 1387212570, "open": 395, "close": 253, "high": 424, "low": 213}
 ];
+
+
+export const arraydata=()=>{
+  const dataset = []
+
+  for(let i=0; i<5; i++){
+    dataset.push(Math.round(Math.random()*100));
+}
+
+    return dataset;
+
+}
+
+

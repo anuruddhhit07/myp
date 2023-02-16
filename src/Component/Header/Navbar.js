@@ -29,6 +29,7 @@ const NavigationBar = () => {
             <NavItem to='/svgcd' value='SVGCD'/>  */}
             {/* <NavItem to='/cwrapper' value='WRAP'/> */}
             <NavItem to='/app2' value='App'/>
+            <NavItem to='/ex' value='EX'/>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

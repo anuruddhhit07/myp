@@ -34,7 +34,7 @@ export default function CanvasContainer(props) {
   return (
     <>
    
-      <div> hello</div>
+      {/* <div> hello</div> */}
       <div ref={refElement} />
     </>
   );
