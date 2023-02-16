@@ -4,6 +4,7 @@ import CanvasContainer from "./CanvasContainer/CanvasContainer";
 import Collector from "./Collector";
 import Chart from "./Chart/Chart";
 import Axis from "./Axis/Axis";
+import Scaterplot from "./Chart/ScaterPlot"
 import useController from "./Controller/Controller";
 import * as d3 from "d3";
 
@@ -12,8 +13,8 @@ import * as d3 from "d3";
 const EnterApi = () => {
   const dimensions = {
     width: 600,
-    height: 300,
-    margin: { top:70, right: 50, bottom: 40, left: 70 },
+    height: 600,
+    margin: { top:10, right: 50, bottom: 40, left: 70 },
   };
   const { width, height, margin = {} } = dimensions;
   const data = testdata;
@@ -27,6 +28,7 @@ const EnterApi = () => {
       <Collector dimensions={dimensions} data={data} controller={controller}>
         <Chart msg={"hi Chart 1"} />
         <Axis msg={"hi Axis 1"} />
+        <Scaterplot msg={"hii"} />
       </Collector>
     </div>
   );

@@ -1,8 +1,8 @@
 import React, { useRef,useEffect } from "react";
-import AxisD3 from "./Axis3D";
+import ScaterPlotD3 from "./ScaterPlotD3";
 
 
-export default function Axis(props) {
+export default function ScaterPlot(props) {
   const { dimensions, data,msg,controller } = props;
   const refElement = useRef(null);
 //   console.log('Axis',props);
@@ -23,7 +23,7 @@ export default function Axis(props) {
 
     //   upseprop=useController1(data,200,300)
     //   console.log(upseprop);
-      let vis = new AxisD3(refElement.current, d3Props);
+      let vis = new ScaterPlotD3(refElement.current, d3Props);
     //   console.log('vis',vis);
     }
   }

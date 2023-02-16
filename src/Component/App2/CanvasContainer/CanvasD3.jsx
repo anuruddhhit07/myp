@@ -18,8 +18,8 @@ export default class CanvasD3 {
         .append("svg")
         .attr("id", "bg")
         .style("background-color", "white")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height +margin.top + margin.bottom)
+        .attr("width", width + margin.left*0 + margin.right*0)
+        .attr("height", height +margin.top *0+ margin.bottom*0)
     // //   this.updateDatapoints();
     }
 

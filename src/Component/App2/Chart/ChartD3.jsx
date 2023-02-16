@@ -16,7 +16,8 @@ export default class ChartD3 {
     //   this.props = props;
       const {dimensions: { width, height,margin } ,msg} = props;
     //   console.log(msg);
-    //   console.log(dataset);
+    //   console.log(dataset)
+  //  const { yTickFormat, xScale, yScale, yScaleForAxis } = props.controller;
       
 
       this.svg = d3
@@ -30,8 +31,8 @@ export default class ChartD3 {
           .style("stroke", "gray")
           .style("fill", "white")
           .attr("r", 40)
-          .attr("cx", function(d, i){return 50 + (i*80)})
-          .attr("cy", 120)
+          .attr("cx", function(d, i){return 0 + (i*80)})
+          .attr("cy", height)
           .on("mousedown",(d, i) => this.mouseDown(d,i))
 
     
