@@ -24,7 +24,7 @@ export default function Axis(props) {
     //   upseprop=useController1(data,200,300)
     //   console.log(upseprop);
       let vis = new AxisD3(refElement.current, d3Props);
-    //   console.log('vis',vis);
+      
     }
   }
 

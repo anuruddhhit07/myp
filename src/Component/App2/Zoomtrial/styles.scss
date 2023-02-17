@@ -1,0 +1,39 @@
+#Type1 {
+    stroke: DarkTurquoise;
+  }
+  
+  #Type2 {
+    stroke: steelblue;
+  }
+  
+  .data-line {
+    fill: none;
+    stroke-width: 2.5;
+    opacity: 0.8;
+    stroke-linecap: round;
+    clip-path: url(#clip);
+    transition: 0.5s;
+  }
+  
+  .context-line {
+    fill: none;
+    stroke-width: 1.5;
+    stroke: grey;
+    stroke-linecap: round;
+    clip-path: url(#clip);
+  }
+  
+  div.svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    vertical-align: top;
+    background-color: rgb(216, 245, 245);
+  }
+  
+  .zoom {
+    cursor: move;
+    fill: none;
+    pointer-events: all;
+  }

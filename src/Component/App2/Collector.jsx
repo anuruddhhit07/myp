@@ -28,12 +28,12 @@ export default class Collector extends Component {
 
 
   render() {
-    const { dimensions, data, children } = this.props;
+    const { dimensions, data,controller, children } = this.props;
     return (
       <div>
 
         hello
-        <CanvasContainer  dimensions={dimensions} data={data} />
+        <CanvasContainer  dimensions={dimensions} data={data} controller={controller} />
         {/* {console.log(this.childrenWithProps)} */}
         
         {this.childrenWithProps}

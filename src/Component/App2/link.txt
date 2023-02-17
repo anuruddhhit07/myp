@@ -1,3 +1,8 @@
 https://www.developerway.com/posts/react-elements-children-parents
 https://stackoverflow.com/questions/32370994/how-to-pass-props-to-this-props-children
 https://blog.griddynamics.com/using-d3-js-with-react-js-an-8-step-comprehensive-manual/
+https://stackoverflow.com/questions/45246500/d3js-v4-brush-zoom-recenter-brush-on-click
+https://plnkr.co/edit/Hfloa9P3oeSJ7iqqKeFM?p=preview&preview
+https://levelup.gitconnected.com/react-hooks-and-d3-39be1d900fb
+https://www.developerway.com/posts/react-re-renders-guide
+https://github.com/patternfly/patternfly-timeline/blob/master/src/zoom.js

@@ -2,6 +2,10 @@ import { useMemo } from "react";
 import * as d3 from "d3";
  
 const useController = ({ data, width, height,margin }) => {
+// console.log(width);
+  var width = width - margin.left - margin.right
+  var height = height - margin.top - margin.bottom
+  // console.log(width);
   
   data.forEach(function (d) {
       d.time = new Date(d.time * 1000);
@@ -21,9 +25,15 @@ const useController = ({ data, width, height,margin }) => {
   );
 
   const xScale = useMemo(
-    () => d3.scaleTime().domain([xMin, xMax]).range([margin.left, width-margin.right]),
+    () => d3.scaleTime().domain([xMin, xMax]).range([0, width]),
     [xMin, xMax, width]
   );
+
+  const xScale0 = useMemo(
+    () => d3.scaleTime().domain([xMin, xMax]).range([0, width]),
+    [xMin, xMax, width]
+  );
+
 
 
   const yMin = useMemo(
@@ -45,9 +55,9 @@ const useController = ({ data, width, height,margin }) => {
       .range([height, 0]);
   }, [height, yMin, yMax]);
 
-console.log("hii",[yMin,yMax])
+// console.log("hii",[yMin,yMax])
   const yScale = useMemo(
-    () => d3.scaleLinear().domain([yMin, yMax]).range([height-margin.bottom, margin.top]),
+    () => d3.scaleLinear().domain([yMin, yMax]).range([height, 0]),
     [height, yMin, yMax]
   );
   const yTickFormat = (d) =>
@@ -56,6 +66,7 @@ console.log("hii",[yMin,yMax])
   return {
     yTickFormat,
     xScale,
+    xScale0,
     yScale,
     yScaleForAxis
   };

@@ -26,13 +26,13 @@ const EnterApi = () => {
   return (
     <div>
       {/* <CanvasContainer  dimensions={dimensions} data={data} /> */}
-      <Collector dimensions={dimensions} data={data} controller={controller}>
-        {/* <Chart msg={"hi Chart 1"} /> */}
+      {/* <Collector dimensions={dimensions} data={data} controller={controller}>
+        <Chart msg={"hi Chart 1"} />
         <Axis msg={"hi Axis 1"} />
         <Scaterplot msg={"hii"} />
-      </Collector>
+      </Collector> */}
 
-      {/* < ZoomTrial /> */}
+      < ZoomTrial />
 
 
     </div>

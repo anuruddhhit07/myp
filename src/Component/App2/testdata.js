@@ -59,4 +59,131 @@ export const arraydata=()=>{
 
 }
 
+// ===Daten===
+export const datapluck = [{
+  "Datum": "2013-02-04 00:00:00",
+  "Summe": "1000.00",
+  "Type": "Type1",
+  "Notizen": null
+}, {
+  "Datum": "2013-02-04 00:00:00",
+  "Summe": "200.00",
+  "Type": "Type2",
+  "Notizen": null
+}, {
+  "Datum": "2013-02-21 00:00:00",
+  "Summe": "4000.00",
+  "Type": "Type1",
+  "Notizen": null
+}, {
+  "Datum": "2013-02-23 00:00:00",
+  "Summe": "2000.00",
+  "Type": "Type1",
+  "Notizen": null
+}, {
+  "Datum": "2013-02-23 00:00:00",
+  "Summe": "601.00",
+  "Type": "Type2",
+  "Notizen": null
+}, {
+  "Datum": "2013-03-04 00:00:00",
+  "Summe": "775.00",
+  "Type": "Type1",
+  "Notizen": null
+}, {
+  "Datum": "2013-03-04 00:00:00",
+  "Summe": "1395.10",
+  "Type": "Type2",
+  "Notizen": null
+}, {
+  "Datum": "2013-04-03 00:00:00",
+  "Summe": "400.00",
+  "Type": "Type1",
+  "Notizen": null
+}, {
+  "Datum": "2013-04-03 00:00:00",
+  "Summe": "1040.00",
+  "Type": "Type2",
+  "Notizen": null
+}, {
+  "Datum": "2013-05-24 00:00:00",
+  "Summe": "400.00",
+  "Type": "Type1",
+  "Notizen": null
+}, {
+  "Datum": "2013-05-24 00:00:00",
+  "Summe": "3288.88",
+  "Type": "Type2",
+  "Notizen": null
+}, {
+  "Datum": "2013-05-28 00:00:00",
+  "Summe": "400.00",
+  "Type": "Type1",
+  "Notizen": null
+}, {
+  "Datum": "2013-05-28 00:00:00",
+  "Summe": "4407.10",
+  "Type": "Type2",
+  "Notizen": null
+}, {
+  "Datum": "2013-06-01 00:00:00",
+  "Summe": "400.00",
+  "Type": "Type1",
+  "Notizen": null
+}, {
+  "Datum": "2013-06-01 00:00:00",
+  "Summe": "3525.86",
+  "Type": "Type2",
+  "Notizen": null
+}, {
+  "Datum": "2013-06-04 00:00:00",
+  "Summe": "400.00",
+  "Type": "Type1",
+  "Notizen": null
+}, {
+  "Datum": "2013-06-04 00:00:00",
+  "Summe": "2990.17",
+  "Type": "Type2",
+  "Notizen": null
+}, {
+  "Datum": "2013-06-10 00:00:00",
+  "Summe": "390.00",
+  "Type": "Type1",
+  "Notizen": null
+}, {
+  "Datum": "2013-06-10 00:00:00",
+  "Summe": "366.00",
+  "Type": "Type2",
+  "Notizen": null
+}, {
+  "Datum": "2013-06-14 00:00:00",
+  "Summe": "390.00",
+  "Type": "Type1",
+  "Notizen": null
+}, {
+  "Datum": "2013-06-14 00:00:00",
+  "Summe": "925.18",
+  "Type": "Type2",
+  "Notizen": null
+}, {
+  "Datum": "2013-06-16 00:00:00",
+  "Summe": "708.44",
+  "Type": "Type1",
+  "Notizen": null
+}, {
+  "Datum": "2013-06-16 00:00:00",
+  "Summe": "609.10",
+  "Type": "Type2",
+  "Notizen": null
+}, {
+  "Datum": "2013-06-20 00:00:00",
+  "Summe": "708.44",
+  "Type": "Type1",
+  "Notizen": null
+}, {
+  "Datum": "2013-06-20 00:00:00",
+  "Summe": "1760.80",
+  "Type": "Type2",
+  "Notizen": null
+}]
 
