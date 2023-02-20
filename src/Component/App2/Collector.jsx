@@ -36,7 +36,7 @@ export default class Collector extends Component {
         <CanvasContainer  dimensions={dimensions} data={data} controller={controller} />
         {/* {console.log(this.childrenWithProps)} */}
         
-        {this.childrenWithProps}
+        {/* {this.childrenWithProps} */}
 
       </div>
     );
