@@ -7,6 +7,7 @@ import { testdata, timesereiohlc } from "./Dummydata/dummydata";
 import XAxis from "./xAxis";
 import Chart from "./Chart";
 import Axis from "./xaxis2";
+import Linechart from "./Linechart"
 
 // console.log(timesereisdata());
 
@@ -267,6 +268,7 @@ const Maincall = () => {
         <XAxis dimensions={dimstate} xScale={xScale} data={statedata.data} />
         <Axis scale={xScale} orientation="bottom" ticks={5} />
         <Axis scale={yScale} orientation="left" ticks={5} />
+        <Linechart svgRef={svgRef} data={statedata.data} xScale={xScale} yScale={yScale}/>
         
          <rect
             className="reset-listening-rect"
