@@ -24,3 +24,21 @@ div.svg-container {
     // vertical-align: top;
     background-color: rgb(43, 228, 228);
   }
+  
+  .line {
+  fill: none;
+  stroke: blue;
+  stroke-width: 1.5;
+}
+
+rect {
+  opacity: 0.8;
+}
+
+rect.green {
+  fill: green;
+}
+
+rect.red {
+  fill: red;
+}
