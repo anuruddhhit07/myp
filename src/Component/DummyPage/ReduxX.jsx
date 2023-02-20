@@ -23,7 +23,7 @@ function reducer(state, action) {
 }
 
 // Create a context for the visualization state and dispatch function
-const VisualizationContext = createContext();
+export const VisualizationContext = createContext();
 
 // Create a component to wrap the visualization and provide the context
 function Visualization({ data }) {
@@ -67,21 +67,37 @@ function Visualization({ data }) {
 }
 
 // Create a component to consume the visualization context
-function Controls() {
-  const { state, dispatch } = useContext(VisualizationContext);
+//function Controls() {
+//  const { state, dispatch } = useContext(VisualizationContext);
 
   // Add a button to randomly add data to the visualization
-  function handleAddData() {
-    const newData = state.data.concat({
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-    });
-    dispatch({ type: "LOAD_DATA", payload: newData });
-  }
+  //function handleAddData() {
+   // const newData = state.data.concat({
+    //  x: Math.random() * 100,
+  //    y: Math.random() * 100,
+//    });
+////    dispatch({ type: "LOAD_DATA", payload: newData });
+//  }
 
-  return (
-    <div>
-      <button onClick={handleAddData}>Add Data</button>
-    </div>
-  );
-}
+//  return (
+ //   <div>
+//      <button onClick={handleAddData}>Add Data</button>
+///    </div>
+//  );
+//}
+
+//function MainApp() {
+    
+  ////  const VisualizationContext = createContext();
+
+   // const { state, dispatch } = useContext(VisualizationContext);
+    
+    
+ // return (
+   // <>
+ //     <h1>Hello World!</h1>
+ //     <p>This is some content insid
+
+
+
+export {Visualization}
