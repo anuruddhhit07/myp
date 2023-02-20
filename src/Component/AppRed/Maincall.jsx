@@ -176,7 +176,7 @@ const Maincall = () => {
   
   useEffect(() => {
       const svg = d3.select(svgRef.current);
-    const resetListener = d3.select(".reset-listening-rect");
+    const resetListener = d3.select(".focus");
 
     // center the action (handles multitouch)
     const center = (event, target) => {
