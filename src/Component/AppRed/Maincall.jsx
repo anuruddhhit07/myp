@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useRef, useMemo } from "react";
+import React, { useEffect, useReducer, useRef, useMemo ,useState} from "react";
 import * as d3 from "d3";
 import "./styles.scss";
 import CanvasDom from "./CanvasDom";
@@ -79,7 +79,13 @@ function scalereducer(state, action) {
 //   }
 
 const Maincall = () => {
-  const refElement = useRef();
+  const  svgRef = useRef();
+  const [currentGlobalZoomState, setCurrentGlobalZoomState] = useState(
+    d3.zoomIdentity
+  );
+  const [currentYZoomState, setCurrentYZoomState] = useState(d3.zoomIdentity);
+  const [currentXZoomState, setCurrentXZoomState] = useState(d3.zoomIdentity);
+
 
   const [dimstate, dispatchdim] = useReducer(
     dimensionreducer,
@@ -119,7 +125,7 @@ const Maincall = () => {
         .scaleTime()
         .domain([xMin, xMax])
         .range([0, width - margin.right - margin.left]),
-    [xMin, xMax, width]
+    [xMin, xMax, width,currentXZoomState]
   );
 
   const xScale0 = useMemo(
@@ -153,8 +159,82 @@ const Maincall = () => {
         .scaleLinear()
         .domain([yMin, yMax])
         .range([height - margin.top - margin.bottom, 0]),
-    [height, yMin, yMax]
+    [height, yMin, yMax,currentXZoomState]
   );
+  
+  if (currentXZoomState) {
+    const newXScale = currentXZoomState.rescaleX(xScale);
+    xScale.domain(newXScale.domain());
+  }
+
+  if (currentYZoomState) {
+    const newYScale = currentYZoomState.rescaleY(yScale);
+    yScale.domain(newYScale.domain());
+  }
+
+  
+  
+  useEffect(() => {
+      const svg = d3.select(svgRef.current);
+    const resetListener = d3.select(".reset-listening-rect");
+
+    // center the action (handles multitouch)
+    const center = (event, target) => {
+      if (event.sourceEvent) {
+        const p = d3.pointers(event, target);
+        return [d3.mean(p, (d) => d[0]), d3.mean(p, (d) => d[1])];
+      }
+      return [width / 2, height / 2];
+    };
+    
+     const zoomGlobal = d3.zoom()
+      .scaleExtent([0.1, 500])
+      .on("zoom", (event) => {
+        console.log("Eventtyy",event.transform);
+        const { k: newK, x: newX, y: newY } = event.transform;
+        const { k: prevK, x: prevX, y: prevY } = currentGlobalZoomState;
+        const point = center(event, svg);
+
+        const isZoomingX =
+          point[0] > dimstate.margin.left + 50 && point[0] < width;
+        const isZoomingY =
+          point[1] > dimstate.margin.top && point[1] < height - 50;
+
+        /* 
+          Getting the transformations arguments from the new and the previous
+          transforms objects, in order to apply it to currentXZoomState & currentYZoomState
+          See https://github.com/d3/d3-zoom#transform_translate
+          && https://github.com/d3/d3-zoom#transform_scale for details
+        */
+        isZoomingX &&
+          setCurrentXZoomState(
+            currentXZoomState
+              .translate((newX - prevX) / prevK, 0)
+              .scale(newK / prevK)
+          );
+        isZoomingY &&
+          setCurrentYZoomState(
+            currentYZoomState
+              .translate(0, (newY - prevY) / prevK)
+              .scale(newK / prevK)
+          );
+
+        // Keeping track of the previous transform object
+        setCurrentGlobalZoomState(event.transform);
+      });
+
+    svg.call(zoomGlobal);
+    
+  },[
+    currentXZoomState,
+    currentYZoomState,
+    currentGlobalZoomState,
+    xScale,
+    yScale
+  ])
+  
+  
+  
 
   function handleDataClick() {
     dispatch({
@@ -178,7 +258,7 @@ const Maincall = () => {
         <button onClick={handleDataClick_Dcrease}>D--</button>
       </div>
       <Chart
-        svgRef={refElement}
+        svgRef={svgRef}
         dimensions={dimstate}
         dispatchdim={dispatchdim}
         data={statedata.data}
@@ -190,10 +270,10 @@ const Maincall = () => {
         
          <rect
             className="reset-listening-rect"
-            width={dimensions.width}
-            height={dimensions.height}
-            x={-DIMENSIONS.marginLeft}
-            y={-DIMENSIONS.marginTop}
+               x="0"
+                y="0"
+                width={dimstate.width-dimstate.margin.left-dimstate.margin.right}
+                height={dimstate.height-dimstate.margin.top-dimstate.margin.bottom}
             fill="transparent"
           />
       </Chart>
