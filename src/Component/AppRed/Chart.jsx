@@ -9,6 +9,14 @@ const Chart = ({svgRef, dimensions, dispatchdim,data,controller, children }) => 
 
     // console.log(dispatchdim);
     
+   // this.focus
+  //    .append("rect")
+  //    .attr("class", "zoom")
+ //     .attr("width", width_draw)
+//      .attr("height", height_draw)
+ //     .style("fill", "blue")
+ //     .style("opacity", .1)
+    
   
 
 
@@ -21,6 +29,9 @@ const Chart = ({svgRef, dimensions, dispatchdim,data,controller, children }) => 
         <g className="focus"
           transform={`translate(${dimensions.margin.left}, ${dimensions.margin.top})`}
         >
+           <rect x="0" y="0" width={dimensions.width-dimensions.margin.left-dimensions.margin.right} height={dimensions.height-dimensions.margin.top-dimensions.margin.bottom} stroke="blue" fill="purple"
+       fill-opacity="0.5" stroke-opacity="0.8"/>
+
           <defs>
             <clipPath className="clip-path" id="clip">
               <rect

@@ -3,9 +3,10 @@ import * as d3 from "d3";
 import "./styles.scss";
 import CanvasDom from "./CanvasDom";
 import UseController from "./Controller/Controller";
-import { testdata,timesereiohlc } from "./Dummydata/dummydata";
+import { testdata, timesereiohlc } from "./Dummydata/dummydata";
 import XAxis from "./xAxis";
 import Chart from "./Chart";
+import Axis from "./xaxis2";
 
 // console.log(timesereisdata());
 
@@ -91,7 +92,7 @@ const Maincall = () => {
   const height = dimstate.height;
   const margin = dimstate.margin;
 
-  console.log("data:",statedata);
+  console.log("data:", statedata);
 
   // data.forEach(function (d) {
   //   d.time = new Date(d.time * 1000);
@@ -117,7 +118,7 @@ const Maincall = () => {
       d3
         .scaleTime()
         .domain([xMin, xMax])
-        .range([0, 300]),
+        .range([0, width - margin.right - margin.left]),
     [xMin, xMax, width]
   );
 
@@ -132,7 +133,28 @@ const Maincall = () => {
 
   console.log([xMin, xMax]);
 
-  
+  const yMin = useMemo(
+    () =>
+      d3.min(data, function (d) {
+        return Math.min(d.low);
+      }),
+    [data]
+  );
+  const yMax = useMemo(
+    () =>
+      d3.max(data, function (d) {
+        return Math.max(d.high);
+      }),
+    [data]
+  );
+  const yScale = useMemo(
+    () =>
+      d3
+        .scaleLinear()
+        .domain([yMin, yMax])
+        .range([height - margin.top - margin.bottom, 0]),
+    [height, yMin, yMax]
+  );
 
   function handleDataClick() {
     dispatch({
@@ -141,19 +163,19 @@ const Maincall = () => {
   }
 
   function handleDataClick_Increase() {
-    dispatchdim({ type: 'increment'});
+    dispatchdim({ type: "increment" });
   }
 
   function handleDataClick_Dcrease() {
-    dispatchdim({ type: 'decrement'});
+    dispatchdim({ type: "decrement" });
   }
-console.log(xScale);
+  console.log(xScale);
   return (
     <div>
-    <div>
-      <button onClick={handleDataClick}>Add data</button>
-      <button onClick={handleDataClick_Increase}>I++</button>
-      <button onClick={handleDataClick_Dcrease}>D--</button>
+      <div>
+        <button onClick={handleDataClick}>Add data</button>
+        <button onClick={handleDataClick_Increase}>I++</button>
+        <button onClick={handleDataClick_Dcrease}>D--</button>
       </div>
       <Chart
         svgRef={refElement}
@@ -163,19 +185,18 @@ console.log(xScale);
         controller={controller}
       >
         <XAxis dimensions={dimstate} xScale={xScale} data={statedata.data} />
-
+        <Axis scale={xScale} orientation="bottom" ticks={5} />
+        <Axis scale={yScale} orientation="left" ticks={5} />
         
+         <rect
+            className="reset-listening-rect"
+            width={dimensions.width}
+            height={dimensions.height}
+            x={-DIMENSIONS.marginLeft}
+            y={-DIMENSIONS.marginTop}
+            fill="transparent"
+          />
       </Chart>
-
-      <CanvasDom 
-      svgRef={refElement}
-      dimensions={dimstate}
-      dispatchdim={dispatchdim}
-      data={statedata.data}
-      controller={controller}
-       />
-
-
     </div>
   );
 };
