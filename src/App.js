@@ -14,6 +14,7 @@ import D3Chart from "./Component/Application/ReactComponent.jsx"
 import EnterApi from "./Component/App2/EnterApi";
 import EnterZoom from "./Component/App2/Enterzoom";
 import WelcomeDialog from "./Component/App2/PCINT/ex1";
+import MainApp from "./Component/DummyPage/MaiApp"
 
 function App() {
   return (
@@ -34,7 +35,7 @@ function App() {
          <Route path="/svgcd" element={<MySvgCD/>}/>
          <Route path="/cwrapper" element={<D3Chart/>}/>
          <Route path="/app2" element={<EnterApi/>}/>
-         <Route path="/ex" element={<EnterZoom/>}/>
+         <Route path="/ex" element={<MainApp />}/>
       
       </Routes>
       {/* </div> */}
